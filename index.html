@@ -42,7 +42,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* ===== CANVAS DE PARTÍCULAS DE FUEGO (super ligero) ===== */
+        /* ===== CANVAS DE PARTÍCULAS DE FUEGO ===== */
         #fireCanvas {
             position: fixed;
             top: 0;
@@ -121,7 +121,7 @@
         @keyframes float2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-40px, 40px); } }
         @keyframes float3 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-30px, -30px); } }
 
-        /* Ruido ultra ligero (solo visible en pantallas grandes) */
+        /* Ruido textura (solo PC) */
         body::after {
             content: '';
             position: fixed;
@@ -129,11 +129,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
             pointer-events: none;
             z-index: 1;
-            opacity: 0.4;
-            display: none; /* oculto por defecto en móvil, se muestra en escritorio */
+            opacity: 0.5;
         }
 
         .container {
@@ -156,7 +155,7 @@
             align-items: center;
             gap: 8px;
             padding: 7px 18px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(139, 92, 246, 0.15));
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(139, 92, 246, 0.1));
             border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 50px;
             font-size: 11px;
@@ -164,6 +163,8 @@
             color: var(--gold-light);
             margin-bottom: 18px;
             text-transform: uppercase;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             font-weight: 600;
             animation: fadeInDown 1s ease;
             position: relative;
@@ -213,10 +214,12 @@
             max-width: 700px;
             margin: 0 auto 40px;
             padding: 14px 25px;
-            background: rgba(212, 175, 55, 0.08);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(139, 92, 246, 0.08));
             border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 18px;
             text-align: center;
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             position: relative;
             overflow: hidden;
             animation: fadeInUp 1s ease 0.6s backwards;
@@ -343,15 +346,17 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        /* ===== TARJETA DEL PLAN (SIN BACKDROP-FILTER) ===== */
+        /* ===== TARJETA DEL PLAN (PC CON BLUR) ===== */
         .plan {
-            background: rgba(20, 20, 30, 0.75); /* vidrio sin blur costoso */
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 0 0 22px 22px;
             padding: 30px 28px 28px;
             position: relative;
             overflow: hidden;
-            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             transform-style: preserve-3d;
         }
 
@@ -530,7 +535,7 @@
 
         .alt-box {
             margin-top: 14px; padding: 14px 16px;
-            background: rgba(212,175,55,0.06);
+            background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(212,175,55,0.02));
             border: 1.5px dashed rgba(212,175,55,0.3);
             border-radius: 12px; position: relative; overflow: hidden;
         }
@@ -599,7 +604,29 @@
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ===== RESPONSIVE ===== */
+        /* ===== REGLAS SOLO PARA MÓVIL (CLASE .is-mobile) ===== */
+        body.is-mobile .plan {
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            background: rgba(20, 20, 30, 0.85);
+        }
+        body.is-mobile .promo-banner,
+        body.is-mobile .brand-badge {
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            background: rgba(20, 20, 30, 0.7);
+        }
+        body.is-mobile::after {
+            display: none;
+        }
+        body.is-mobile .orb {
+            opacity: 0.15;
+        }
+        body.is-mobile .orb-1 { width: 200px; height: 200px; }
+        body.is-mobile .orb-2 { width: 180px; height: 180px; }
+        body.is-mobile .orb-3 { width: 160px; height: 160px; }
+
+        /* Ajustes responsive generales */
         @media (max-width: 768px) {
             .container { padding: 25px 15px 30px; }
             .plans { grid-template-columns: 1fr; gap: 40px; }
@@ -610,15 +637,10 @@
             .plan-name { font-size: 1.3rem; }
             .plan-logo { width: 50px; height: 50px; }
             .promo-banner { padding: 12px 18px; }
-            .orb { opacity: 0.15; }
-            .orb-1 { width: 200px; height: 200px; }
-            .orb-2 { width: 180px; height: 180px; }
-            .orb-3 { width: 160px; height: 160px; }
-            body::after { display: none; } /* sin ruido en móvil */
         }
 
         @media (max-width: 480px) {
-            .plan { padding: 20px 15px 18px; background: rgba(15, 15, 25, 0.8); }
+            .plan { padding: 20px 15px 18px; }
             .discount-badge { padding: 6px 10px; gap: 4px; font-size: 0.75rem; }
             .discount-badge .old-price { font-size: 0.7rem; }
             .discount-badge .new-price { font-size: 0.78rem; }
@@ -772,7 +794,7 @@
                         <li><span class="check">✓</span> Exclusivo para páginas de negocio</li>
                     </ul>
 
-                    <div class="alt-box" style="border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.06);">
+                    <div class="alt-box" style="border-color: rgba(139,92,246,0.3); background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(74,144,226,0.02));">
                         <div class="alt-box-title" style="color: var(--blue);">💼 Nota importante</div>
                         <p style="color: var(--text); margin-bottom: 0;">Este plan está <strong>exclusivamente disponible para páginas de negocio</strong>. No aplica para tarjetas de cumpleaños ni celebraciones.</p>
                     </div>
@@ -790,25 +812,34 @@
 
     <script>
         (function() {
-            // ===== SISTEMA DE PARTÍCULAS DE FUEGO MEGA LIGERO =====
+            // Detección de dispositivo
+            const isMobileDevice = ('ontouchstart' in window || navigator.maxTouchPoints > 0) && window.innerWidth < 1024;
+            if (isMobileDevice) {
+                document.body.classList.add('is-mobile');
+            }
+
             const canvas = document.getElementById('fireCanvas');
             const ctx = canvas.getContext('2d', { alpha: true, willReadFrequently: false });
 
             let width, height;
-            const isMobile = window.innerWidth <= 768;
-            const isSmallMobile = window.innerWidth <= 480;
-            // Partículas mínimas para móvil
-            const PARTICLE_COUNT = isSmallMobile ? 15 : (isMobile ? 20 : 50);
             const particles = [];
 
-            const fireColorsRGBA = [
-                [255, 230, 100],
-                [255, 180, 50],
-                [255, 120, 30],
-                [255, 80, 20],
-                [220, 50, 20],
-                [180, 30, 10]
+            // Paleta de colores del fuego
+            const fireColors = [
+                [255, 230, 100], // Amarillo brillante
+                [255, 180, 50],  // Naranja dorado
+                [255, 120, 30],  // Naranja
+                [255, 80, 20],   // Rojo-anaranjado
+                [220, 50, 20],   // Rojo oscuro
+                [180, 30, 10]    // Rojo profundo
             ];
+
+            // Configuración según dispositivo
+            const isMobile = window.innerWidth <= 768;
+            const isSmallMobile = window.innerWidth <= 480;
+            let PARTICLE_COUNT = isSmallMobile ? 15 : (isMobile ? 20 : 50);
+            // En PC usamos el sistema completo
+            const useFullFX = !isMobileDevice; // true en PC, false en móvil
 
             function resizeCanvas() {
                 const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -833,10 +864,10 @@
                     this.y = initial ? Math.random() * height : height + Math.random() * 50;
                     this.vx = (Math.random() - 0.5) * 0.8;
                     this.vy = -(Math.random() * 1.5 + 0.5);
-                    this.size = Math.random() * 3 + 2;
+                    this.size = Math.random() * 4 + 2;
                     this.life = 1;
                     this.decay = Math.random() * 0.008 + 0.003;
-                    this.colorIndex = Math.floor(Math.random() * fireColorsRGBA.length);
+                    this.colorIndex = Math.floor(Math.random() * fireColors.length);
                     this.wobble = Math.random() * Math.PI * 2;
                     this.wobbleSpeed = Math.random() * 0.05 + 0.02;
                 }
@@ -847,28 +878,54 @@
                     this.y += this.vy;
                     this.life -= this.decay;
                     const progress = 1 - this.life;
-                    this.colorIndex = Math.min(fireColorsRGBA.length - 1, Math.floor(progress * fireColorsRGBA.length));
+                    this.colorIndex = Math.min(fireColors.length - 1, Math.floor(progress * fireColors.length));
                     if (this.life <= 0 || this.y < -20) this.reset(false);
                 }
 
-                draw(ctx) {
+                // Dibujo ligero (móvil)
+                drawSimple(ctx) {
                     const alpha = this.life * 0.7;
                     if (alpha <= 0.01) return;
-                    const [r, g, b] = fireColorsRGBA[this.colorIndex];
-                    const s = this.size;
-                    // Solo un círculo suave, sin glow costoso
+                    const [r, g, b] = fireColors[this.colorIndex];
                     ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, s, 0, Math.PI * 2);
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Dibujo completo (PC) con glow y mezcla aditiva
+                drawFull(ctx) {
+                    const alpha = this.life * 0.8;
+                    if (alpha <= 0.01) return;
+                    const [r, g, b] = fireColors[this.colorIndex];
+                    const glowSize = this.size * 3;
+
+                    // Glow exterior con gradiente radial
+                    const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, glowSize);
+                    gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${alpha})`);
+                    gradient.addColorStop(0.4, `rgba(${r}, ${g}, ${b}, ${alpha * 0.5})`);
+                    gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, glowSize, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Núcleo brillante
+                    ctx.fillStyle = `rgba(255, 240, 180, ${alpha * 0.9})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size * 0.5, 0, Math.PI * 2);
                     ctx.fill();
                 }
             }
 
-            for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new FireParticle());
+            // Crear partículas
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                particles.push(new FireParticle());
+            }
 
-            // FPS bajo (24) para ahorrar batería
+            // Control de FPS
             let lastTime = 0;
-            const fpsInterval = 1000 / 24;
+            const fpsInterval = useFullFX ? 1000 / 60 : 1000 / 24; // 60fps PC, 24fps móvil
 
             function animate(timestamp) {
                 requestAnimationFrame(animate);
@@ -876,16 +933,32 @@
                 if (elapsed < fpsInterval) return;
                 lastTime = timestamp - (elapsed % fpsInterval);
 
-                ctx.clearRect(0, 0, width, height);
+                if (useFullFX) {
+                    // Limpiar con transparencia para estela
+                    ctx.fillStyle = 'rgba(10, 10, 15, 0.15)';
+                    ctx.fillRect(0, 0, width, height);
+                    ctx.globalCompositeOperation = 'lighter';
+                } else {
+                    ctx.clearRect(0, 0, width, height);
+                }
+
                 for (let i = 0; i < particles.length; i++) {
                     particles[i].update();
-                    particles[i].draw(ctx);
+                    if (useFullFX) {
+                        particles[i].drawFull(ctx);
+                    } else {
+                        particles[i].drawSimple(ctx);
+                    }
+                }
+
+                if (useFullFX) {
+                    ctx.globalCompositeOperation = 'source-over';
                 }
             }
 
             requestAnimationFrame(animate);
 
-            // ===== CONTADOR FLIP CLOCK =====
+            // Contador regresivo
             const targetDate = new Date();
             targetDate.setDate(targetDate.getDate() + 30);
             targetDate.setHours(18, 0, 0, 0);
@@ -909,9 +982,8 @@
             updateCountdown();
             setInterval(updateCountdown, 1000);
 
-            // ===== EFECTO 3D TILT (SOLO ESCRITORIO, NO TÁCTIL) =====
-            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-            if (!isTouchDevice) {
+            // Efecto tilt solo en PC
+            if (!isMobileDevice) {
                 document.querySelectorAll('[data-tilt]').forEach(card => {
                     card.addEventListener('mousemove', e => {
                         const rect = card.getBoundingClientRect();
@@ -931,13 +1003,15 @@
                 });
             }
 
-            // Ajustar partículas al cambiar tamaño
+            // Ajustar partículas al redimensionar
             window.addEventListener('resize', () => {
                 const nowMobile = window.innerWidth <= 768;
                 const nowSmall = window.innerWidth <= 480;
                 const targetCount = nowSmall ? 15 : (nowMobile ? 20 : 50);
                 while (particles.length < targetCount) particles.push(new FireParticle());
                 while (particles.length > targetCount) particles.pop();
+                // También actualizar variable de conteo
+                PARTICLE_COUNT = targetCount;
             }, { passive: true });
         })();
     </script>
