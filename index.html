@@ -42,7 +42,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* ===== CANVAS DE PARTÍCULAS DE FUEGO ===== */
+        /* ===== CANVAS DE PARTÍCULAS DE FUEGO (super ligero) ===== */
         #fireCanvas {
             position: fixed;
             top: 0;
@@ -53,11 +53,8 @@
             pointer-events: none;
             filter: blur(8px);
             opacity: 0.85;
-            will-change: transform;
-            image-rendering: auto;
         }
 
-        /* Glow adicional de fondo cálido */
         .fire-glow {
             position: fixed;
             bottom: 0;
@@ -69,20 +66,13 @@
             z-index: 0;
             filter: blur(40px);
             animation: fireGlow 6s ease-in-out infinite;
-            will-change: opacity;
         }
 
         @keyframes fireGlow {
-            0%,
-            100% {
-                opacity: 0.7;
-            }
-            50% {
-                opacity: 1;
-            }
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
         }
 
-        /* ===== FONDO AURORA ANIMADO ===== */
         .aurora-bg {
             position: fixed;
             top: 0;
@@ -92,7 +82,6 @@
             z-index: 0;
             overflow: hidden;
             pointer-events: none;
-            will-change: transform;
         }
 
         .aurora-bg::before {
@@ -107,23 +96,14 @@
                 radial-gradient(ellipse 600px 800px at 80% 70%, rgba(74, 144, 226, 0.1), transparent),
                 radial-gradient(ellipse 700px 500px at 60% 20%, rgba(212, 175, 55, 0.06), transparent);
             animation: aurora 30s ease-in-out infinite;
-            will-change: transform;
         }
 
         @keyframes aurora {
-            0%,
-            100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            33% {
-                transform: translate(30px, -30px) rotate(2deg);
-            }
-            66% {
-                transform: translate(-20px, 20px) rotate(-1deg);
-            }
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(2deg); }
+            66% { transform: translate(-20px, 20px) rotate(-1deg); }
         }
 
-        /* Orbes de luz flotantes */
         .orb {
             position: fixed;
             border-radius: 50%;
@@ -131,67 +111,17 @@
             opacity: 0.35;
             pointer-events: none;
             z-index: 0;
-            will-change: transform;
         }
 
-        .orb-1 {
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.3), transparent);
-            top: 10%;
-            left: 10%;
-            animation: float1 35s ease-in-out infinite;
-        }
+        .orb-1 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(139, 92, 246, 0.3), transparent); top: 10%; left: 10%; animation: float1 35s ease-in-out infinite; }
+        .orb-2 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(74, 144, 226, 0.25), transparent); bottom: 20%; right: 15%; animation: float2 40s ease-in-out infinite; }
+        .orb-3 { width: 280px; height: 280px; background: radial-gradient(circle, rgba(212, 175, 55, 0.2), transparent); top: 50%; left: 50%; animation: float3 38s ease-in-out infinite; }
 
-        .orb-2 {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(74, 144, 226, 0.25), transparent);
-            bottom: 20%;
-            right: 15%;
-            animation: float2 40s ease-in-out infinite;
-        }
+        @keyframes float1 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(50px, -50px); } }
+        @keyframes float2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-40px, 40px); } }
+        @keyframes float3 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-30px, -30px); } }
 
-        .orb-3 {
-            width: 280px;
-            height: 280px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.2), transparent);
-            top: 50%;
-            left: 50%;
-            animation: float3 38s ease-in-out infinite;
-        }
-
-        @keyframes float1 {
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-            50% {
-                transform: translate(50px, -50px);
-            }
-        }
-
-        @keyframes float2 {
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-            50% {
-                transform: translate(-40px, 40px);
-            }
-        }
-
-        @keyframes float3 {
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-            50% {
-                transform: translate(-30px, -30px);
-            }
-        }
-
-        /* Noise texture overlay - optimizado con SVG ligero */
+        /* Ruido ultra ligero (solo visible en pantallas grandes) */
         body::after {
             content: '';
             position: fixed;
@@ -199,12 +129,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
             pointer-events: none;
             z-index: 1;
-            opacity: 0.5;
-            will-change: opacity;
-            image-rendering: -webkit-optimize-contrast;
+            opacity: 0.4;
+            display: none; /* oculto por defecto en móvil, se muestra en escritorio */
         }
 
         .container {
@@ -213,15 +142,13 @@
             padding: 40px 30px 50px;
             position: relative;
             z-index: 2;
-            contain: layout style paint;
         }
 
-        /* ===== HEADER COMPACTO ===== */
+        /* ===== HEADER ===== */
         .header {
             text-align: center;
             margin-bottom: 35px;
             position: relative;
-            contain: layout style paint;
         }
 
         .brand-badge {
@@ -229,7 +156,7 @@
             align-items: center;
             gap: 8px;
             padding: 7px 18px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(139, 92, 246, 0.1));
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(139, 92, 246, 0.15));
             border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 50px;
             font-size: 11px;
@@ -237,34 +164,24 @@
             color: var(--gold-light);
             margin-bottom: 18px;
             text-transform: uppercase;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             font-weight: 600;
             animation: fadeInDown 1s ease;
             position: relative;
             overflow: hidden;
-            will-change: transform, opacity;
         }
 
         .brand-badge::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
             animation: shimmer 4s infinite;
-            will-change: transform;
         }
 
         @keyframes shimmer {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(300%);
-            }
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(300%); }
         }
 
         .header h1 {
@@ -291,48 +208,35 @@
             animation: fadeInUp 1s ease 0.4s backwards;
         }
 
-        /* ===== BANNER PROMOCIONAL COMPACTO ===== */
+        /* ===== BANNER PROMOCIONAL ===== */
         .promo-banner {
             max-width: 700px;
             margin: 0 auto 40px;
             padding: 14px 25px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(139, 92, 246, 0.08));
+            background: rgba(212, 175, 55, 0.08);
             border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 18px;
             text-align: center;
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
             position: relative;
             overflow: hidden;
             animation: fadeInUp 1s ease 0.6s backwards;
-            will-change: transform;
-            contain: layout style paint;
         }
 
         .promo-banner::before {
             content: '';
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
             background: linear-gradient(135deg, var(--gold), var(--purple), var(--blue), var(--gold));
             background-size: 300% 300%;
             border-radius: 18px;
             z-index: -1;
             animation: gradientShift 12s ease infinite;
             opacity: 0.3;
-            will-change: background-position;
         }
 
         @keyframes gradientShift {
-            0%,
-            100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .promo-banner .promo-icon {
@@ -341,17 +245,11 @@
             display: inline-block;
             animation: bounce 3s ease infinite;
             vertical-align: middle;
-            will-change: transform;
         }
 
         @keyframes bounce {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-5px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         .promo-banner strong {
@@ -368,7 +266,7 @@
             opacity: 0.9;
         }
 
-        /* ===== PLANES GRID ===== */
+        /* ===== PLANES ===== */
         .plans {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
@@ -379,16 +277,10 @@
         .plan-wrapper {
             perspective: 1000px;
             animation: fadeInUp 1s ease backwards;
-            contain: layout style paint;
-            content-visibility: auto;
         }
 
-        .plan-wrapper:nth-child(1) {
-            animation-delay: 0.8s;
-        }
-        .plan-wrapper:nth-child(2) {
-            animation-delay: 1s;
-        }
+        .plan-wrapper:nth-child(1) { animation-delay: 0.8s; }
+        .plan-wrapper:nth-child(2) { animation-delay: 1s; }
 
         /* ===== BADGE DE DESCUENTO ===== */
         .discount-badge {
@@ -405,88 +297,41 @@
             box-shadow: 0 -8px 30px rgba(220, 38, 38, 0.4);
             animation: slideDown 0.8s ease;
             overflow: hidden;
-            will-change: transform, opacity;
-            contain: layout style paint;
         }
 
         .discount-badge::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             animation: shineBadge 4s infinite;
-            will-change: transform;
         }
 
         @keyframes shineBadge {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(300%);
-            }
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(300%); }
         }
 
         @keyframes slideDown {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .discount-badge .fire {
-            font-size: 1.1rem;
-            animation: flicker 2s infinite;
-            will-change: transform;
-        }
-
+        .discount-badge .fire { font-size: 1.1rem; animation: flicker 2s infinite; }
         @keyframes flicker {
-            0%,
-            100% {
-                transform: scale(1) rotate(-5deg);
-            }
-            50% {
-                transform: scale(1.2) rotate(5deg);
-            }
+            0%, 100% { transform: scale(1) rotate(-5deg); }
+            50% { transform: scale(1.2) rotate(5deg); }
         }
 
-        .discount-badge .old-price {
-            text-decoration: line-through;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.88rem;
-            font-weight: 600;
-        }
-
-        .discount-badge .arrow {
-            font-size: 1rem;
-            color: #fff;
-            animation: pulse 2s infinite;
-            will-change: transform;
-        }
-
+        .discount-badge .old-price { text-decoration: line-through; color: rgba(255,255,255,0.6); font-size: 0.88rem; font-weight: 600; }
+        .discount-badge .arrow { font-size: 1rem; color: #fff; animation: pulse 2s infinite; }
         @keyframes pulse {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
         }
 
-        .discount-badge .new-price {
-            color: #fff;
-            font-weight: 800;
-            font-size: 0.95rem;
-        }
-
+        .discount-badge .new-price { color: #fff; font-weight: 800; font-size: 0.95rem; }
         .discount-badge .save-tag {
             background: #fff;
             color: #dc2626;
@@ -495,73 +340,53 @@
             font-size: 0.7rem;
             font-weight: 800;
             letter-spacing: 0.5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        /* ===== TARJETA DEL PLAN (COMPACTA) ===== */
+        /* ===== TARJETA DEL PLAN (SIN BACKDROP-FILTER) ===== */
         .plan {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+            background: rgba(20, 20, 30, 0.75); /* vidrio sin blur costoso */
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 0 0 22px 22px;
             padding: 30px 28px 28px;
             position: relative;
             overflow: hidden;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s ease, box-shadow 0.4s ease;
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
             transform-style: preserve-3d;
-            will-change: transform, border-color, box-shadow;
-            contain: layout style paint;
         }
 
         .plan::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
             background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
             background-size: 200% 100%;
             animation: gradientFlow 5s linear infinite;
-            will-change: background-position;
         }
 
         @keyframes gradientFlow {
-            0% {
-                background-position: 0% 0%;
-            }
-            100% {
-                background-position: 200% 0%;
-            }
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
         }
 
         .plan::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212, 175, 55, 0.1),
-                    transparent 50%);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212,175,55,0.1), transparent 50%);
             opacity: 0;
             transition: opacity 0.4s ease;
             pointer-events: none;
-            will-change: opacity, background;
         }
 
-        .plan:hover::after {
-            opacity: 1;
-        }
+        .plan:hover::after { opacity: 1; }
 
         .plan:hover {
             transform: translateY(-10px) rotateX(2deg);
             border-color: rgba(212, 175, 55, 0.4);
-            box-shadow:
-                0 30px 70px rgba(0, 0, 0, 0.6),
-                0 0 60px rgba(212, 175, 55, 0.2),
-                inset 0 0 60px rgba(212, 175, 55, 0.05);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.6), 0 0 60px rgba(212,175,55,0.2), inset 0 0 60px rgba(212,175,55,0.05);
         }
 
         .plan.featured::before {
@@ -571,27 +396,16 @@
             height: 4px;
         }
 
-        .plan.featured {
-            border-color: rgba(139, 92, 246, 0.3);
-        }
-
-        .plan.featured::after {
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(139, 92, 246, 0.15),
-                    transparent 50%);
-        }
-
+        .plan.featured { border-color: rgba(139, 92, 246, 0.3); }
+        .plan.featured::after { background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(139,92,246,0.15), transparent 50%); }
         .plan.featured:hover {
             border-color: rgba(139, 92, 246, 0.6);
-            box-shadow:
-                0 30px 70px rgba(0, 0, 0, 0.6),
-                0 0 60px rgba(139, 92, 246, 0.3),
-                inset 0 0 60px rgba(139, 92, 246, 0.08);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.6), 0 0 60px rgba(139,92,246,0.3), inset 0 0 60px rgba(139,92,246,0.08);
         }
 
         .featured-tag {
             position: absolute;
-            top: 18px;
-            right: 18px;
+            top: 18px; right: 18px;
             background: linear-gradient(135deg, var(--purple), var(--blue));
             color: #fff;
             padding: 5px 13px;
@@ -602,36 +416,28 @@
             text-transform: uppercase;
             box-shadow: 0 5px 20px rgba(139, 92, 246, 0.5);
             animation: glow 3s ease-in-out infinite;
-            will-change: box-shadow;
         }
 
         @keyframes glow {
-            0%,
-            100% {
-                box-shadow: 0 5px 20px rgba(139, 92, 246, 0.5);
-            }
-            50% {
-                box-shadow: 0 5px 30px rgba(139, 92, 246, 0.8);
-            }
+            0%, 100% { box-shadow: 0 5px 20px rgba(139,92,246,0.5); }
+            50% { box-shadow: 0 5px 30px rgba(139,92,246,0.8); }
         }
 
-        /* ===== HEADER DE TARJETA COMPACTO ===== */
         .plan-header {
             display: flex;
             align-items: center;
             gap: 16px;
             margin-bottom: 18px;
             padding-bottom: 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
         .plan-logo {
-            width: 58px;
-            height: 58px;
+            width: 58px; height: 58px;
             flex-shrink: 0;
             border-radius: 14px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
-            border: 1.5px solid rgba(212, 175, 55, 0.3);
+            background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05));
+            border: 1.5px solid rgba(212,175,55,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -639,60 +445,35 @@
             transition: transform 0.4s ease, box-shadow 0.4s ease;
             position: relative;
             overflow: hidden;
-            will-change: transform, box-shadow;
         }
 
         .plan-logo::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(212,175,55,0.2), transparent);
             animation: logoShine 5s infinite;
-            will-change: transform;
         }
 
         @keyframes logoShine {
-            0% {
-                transform: translateX(-100%) translateY(-100%) rotate(45deg);
-            }
-            100% {
-                transform: translateX(100%) translateY(100%) rotate(45deg);
-            }
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
 
         .plan.featured .plan-logo {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(74, 144, 226, 0.15));
-            border-color: rgba(139, 92, 246, 0.4);
+            background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(74,144,226,0.15));
+            border-color: rgba(139,92,246,0.4);
         }
 
-        .plan:hover .plan-logo {
-            transform: scale(1.08) rotate(-5deg);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
-        }
+        .plan:hover .plan-logo { transform: scale(1.08) rotate(-5deg); box-shadow: 0 8px 25px rgba(212,175,55,0.3); }
+        .plan.featured:hover .plan-logo { box-shadow: 0 8px 25px rgba(139,92,246,0.4); }
 
-        .plan.featured:hover .plan-logo {
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
-        }
-
-        .plan-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            position: relative;
-            z-index: 1;
-        }
-
-        .plan-title-block {
-            flex: 1;
-        }
+        .plan-logo img { width: 100%; height: 100%; object-fit: contain; position: relative; z-index: 1; }
 
         .plan-name {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.5rem; font-weight: 700;
             margin-bottom: 3px;
             color: #fff;
             letter-spacing: -0.5px;
@@ -706,473 +487,173 @@
             background-clip: text;
         }
 
-        .plan-subtitle {
-            color: var(--muted);
-            font-size: 0.82rem;
-            font-weight: 300;
-        }
+        .plan-subtitle { color: var(--muted); font-size: 0.82rem; font-weight: 300; }
 
-        /* ===== BLOQUE DE PRECIO COMPACTO ===== */
-        .price-block {
-            margin-bottom: 16px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
+        .price-block { margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .price { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+        .price .currency { font-size: 1.1rem; color: var(--gold); font-weight: 700; }
+        .price .amount { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 700; color: #fff; line-height: 1; letter-spacing: -1.5px; }
+        .plan.featured .price .currency { color: var(--blue); }
+        .price .period { color: var(--muted); font-size: 0.9rem; margin-left: 4px; font-weight: 500; }
+        .price-note { margin-top: 6px; font-size: 0.75rem; color: var(--muted); font-style: italic; font-weight: 300; }
 
-        .price {
-            display: flex;
-            align-items: baseline;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .price .currency {
-            font-size: 1.1rem;
-            color: var(--gold);
-            font-weight: 700;
-        }
-
-        .price .amount {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #fff;
-            line-height: 1;
-            letter-spacing: -1.5px;
-        }
-
-        .plan.featured .price .currency {
-            color: var(--blue);
-        }
-
-        .price .period {
-            color: var(--muted);
-            font-size: 0.9rem;
-            margin-left: 4px;
-            font-weight: 500;
-        }
-
-        .price-note {
-            margin-top: 6px;
-            font-size: 0.75rem;
-            color: var(--muted);
-            font-style: italic;
-            font-weight: 300;
-        }
-
-        /* ===== CARACTERÍSTICAS COMPACTAS ===== */
         .features-title {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--gold);
-            margin-bottom: 10px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--gold); margin-bottom: 10px; font-weight: 700;
+            display: flex; align-items: center; gap: 8px;
         }
+        .features-title::before { content: ''; width: 20px; height: 1.5px; background: var(--gold); }
+        .plan.featured .features-title { color: var(--blue); }
+        .plan.featured .features-title::before { background: var(--blue); }
 
-        .features-title::before {
-            content: '';
-            width: 20px;
-            height: 1.5px;
-            background: var(--gold);
-        }
-
-        .plan.featured .features-title {
-            color: var(--blue);
-        }
-
-        .plan.featured .features-title::before {
-            background: var(--blue);
-        }
-
-        .features {
-            list-style: none;
-            margin-bottom: 14px;
-        }
-
+        .features { list-style: none; margin-bottom: 14px; }
         .features li {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 5px 0;
-            color: var(--text);
-            font-size: 0.85rem;
-            line-height: 1.4;
-            transition: transform 0.3s ease;
-            will-change: transform;
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 5px 0; color: var(--text); font-size: 0.85rem;
+            line-height: 1.4; transition: transform 0.3s ease;
         }
-
-        .features li:hover {
-            transform: translateX(4px);
-        }
+        .features li:hover { transform: translateX(4px); }
 
         .features li .check {
-            flex-shrink: 0;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
+            flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
             background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--dark);
-            font-weight: 900;
-            font-size: 0.65rem;
-            margin-top: 1px;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--dark); font-weight: 900; font-size: 0.65rem;
+            margin-top: 1px; box-shadow: 0 2px 8px rgba(212,175,55,0.3);
             transition: transform 0.3s ease;
-            will-change: transform;
         }
-
-        .features li:hover .check {
-            transform: scale(1.15) rotate(360deg);
-        }
-
+        .features li:hover .check { transform: scale(1.15) rotate(360deg); }
         .plan.featured .features li .check {
             background: linear-gradient(135deg, var(--purple), var(--blue));
-            color: #fff;
-            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+            color: #fff; box-shadow: 0 2px 8px rgba(139,92,246,0.4);
         }
 
-        /* ===== CAJA ALTERNATIVA COMPACTA ===== */
         .alt-box {
-            margin-top: 14px;
-            padding: 14px 16px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02));
-            border: 1.5px dashed rgba(212, 175, 55, 0.3);
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-            contain: layout style paint;
+            margin-top: 14px; padding: 14px 16px;
+            background: rgba(212,175,55,0.06);
+            border: 1.5px dashed rgba(212,175,55,0.3);
+            border-radius: 12px; position: relative; overflow: hidden;
         }
-
         .alt-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent, rgba(212, 175, 55, 0.05), transparent);
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(212,175,55,0.05), transparent);
             animation: altShine 6s infinite;
-            will-change: transform;
         }
-
         @keyframes altShine {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
-
         .alt-box-title {
-            font-size: 0.78rem;
-            color: var(--gold-light);
-            font-weight: 700;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            position: relative;
-            z-index: 1;
+            font-size: 0.78rem; color: var(--gold-light); font-weight: 700;
+            margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;
+            display: flex; align-items: center; gap: 7px;
+            position: relative; z-index: 1;
         }
+        .alt-box p { font-size: 0.8rem; color: var(--text); line-height: 1.5; margin-bottom: 8px; position: relative; z-index: 1; }
 
-        .alt-box p {
-            font-size: 0.8rem;
-            color: var(--text);
-            line-height: 1.5;
-            margin-bottom: 8px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ===== CONTADOR FLIP CLOCK COMPACTO ===== */
         .flip-countdown {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            margin-top: 10px;
-            position: relative;
-            z-index: 1;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+            margin-top: 10px; position: relative; z-index: 1;
         }
-
         .flip-unit {
-            background: linear-gradient(145deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 8px;
-            padding: 8px 5px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
-            will-change: transform;
+            background: linear-gradient(145deg, rgba(0,0,0,0.5), rgba(0,0,0,0.3));
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 8px; padding: 8px 5px; text-align: center;
+            position: relative; overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.3);
         }
-
         .flip-unit::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: rgba(212, 175, 55, 0.2);
+            content: ''; position: absolute; top: 50%; left: 0;
+            width: 100%; height: 1px; background: rgba(212,175,55,0.2);
         }
-
         .flip-num {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--gold-light);
-            font-variant-numeric: tabular-nums;
-            line-height: 1;
-            margin-bottom: 2px;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem;
+            font-weight: 700; color: var(--gold-light);
+            font-variant-numeric: tabular-nums; line-height: 1;
+            margin-bottom: 2px; text-shadow: 0 0 15px rgba(212,175,55,0.5);
         }
-
         .flip-label {
-            font-size: 0.6rem;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            font-weight: 600;
+            font-size: 0.6rem; color: var(--muted); text-transform: uppercase;
+            letter-spacing: 0.8px; font-weight: 600;
         }
 
-        /* ===== FOOTER COMPACTO ===== */
         .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            position: relative;
-            contain: layout style paint;
+            text-align: center; margin-top: 30px; padding-top: 25px;
+            border-top: 1px solid rgba(255,255,255,0.08); position: relative;
         }
-
         .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 1.5px;
+            content: ''; position: absolute; top: 0; left: 50%;
+            transform: translateX(-50%); width: 80px; height: 1.5px;
             background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
-
         .footer .logo-text {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700;
             background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 6px;
-            letter-spacing: -0.5px;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 6px; letter-spacing: -0.5px;
         }
+        .footer p { color: var(--muted); font-size: 0.85rem; margin-bottom: 4px; font-weight: 300; }
+        .footer .note { font-size: 0.75rem; margin-top: 8px; opacity: 0.6; font-style: italic; }
 
-        .footer p {
-            color: var(--muted);
-            font-size: 0.85rem;
-            margin-bottom: 4px;
-            font-weight: 300;
-        }
-
-        .footer .note {
-            font-size: 0.75rem;
-            margin-top: 8px;
-            opacity: 0.6;
-            font-style: italic;
-        }
-
-        /* ===== ANIMACIONES DE ENTRADA ===== */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .container {
-                padding: 25px 15px 30px;
-            }
-            .plans {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            .plan {
-                padding: 25px 20px 22px;
-                backdrop-filter: blur(18px);
-                -webkit-backdrop-filter: blur(18px);
-            }
-            .price .amount {
-                font-size: 2rem;
-            }
-            .discount-badge {
-                flex-wrap: wrap;
-                gap: 6px;
-                padding: 8px 14px;
-            }
-            .flip-num {
-                font-size: 1rem;
-            }
-            .plan-name {
-                font-size: 1.3rem;
-            }
-            .plan-logo {
-                width: 50px;
-                height: 50px;
-            }
-            .promo-banner {
-                padding: 12px 18px;
-                backdrop-filter: blur(18px);
-                -webkit-backdrop-filter: blur(18px);
-            }
-            .brand-badge {
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-            }
-            .orb {
-                opacity: 0.2;
-            }
-            .orb-1 {
-                width: 200px;
-                height: 200px;
-            }
-            .orb-2 {
-                width: 180px;
-                height: 180px;
-            }
-            .orb-3 {
-                width: 160px;
-                height: 160px;
-            }
+            .container { padding: 25px 15px 30px; }
+            .plans { grid-template-columns: 1fr; gap: 40px; }
+            .plan { padding: 25px 20px 22px; }
+            .price .amount { font-size: 2rem; }
+            .discount-badge { flex-wrap: wrap; gap: 6px; padding: 8px 14px; }
+            .flip-num { font-size: 1rem; }
+            .plan-name { font-size: 1.3rem; }
+            .plan-logo { width: 50px; height: 50px; }
+            .promo-banner { padding: 12px 18px; }
+            .orb { opacity: 0.15; }
+            .orb-1 { width: 200px; height: 200px; }
+            .orb-2 { width: 180px; height: 180px; }
+            .orb-3 { width: 160px; height: 160px; }
+            body::after { display: none; } /* sin ruido en móvil */
         }
 
         @media (max-width: 480px) {
-            .plan {
-                padding: 20px 15px 18px;
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-            }
-            .discount-badge {
-                padding: 6px 10px;
-                gap: 4px;
-                font-size: 0.75rem;
-            }
-            .discount-badge .old-price {
-                font-size: 0.7rem;
-            }
-            .discount-badge .new-price {
-                font-size: 0.78rem;
-            }
-            .discount-badge .save-tag {
-                font-size: 0.6rem;
-                padding: 2px 7px;
-            }
-            .flip-num {
-                font-size: 0.9rem;
-            }
-            .flip-label {
-                font-size: 0.5rem;
-            }
-            .flip-unit {
-                padding: 6px 3px;
-            }
-            .flip-countdown {
-                gap: 4px;
-            }
-            .plan-logo {
-                width: 42px;
-                height: 42px;
-                border-radius: 10px;
-                padding: 7px;
-            }
-            .plan-name {
-                font-size: 1.15rem;
-            }
-            .plan-subtitle {
-                font-size: 0.7rem;
-            }
-            .price .amount {
-                font-size: 1.6rem;
-            }
-            .features li {
-                font-size: 0.75rem;
-                gap: 7px;
-            }
-            .features li .check {
-                width: 15px;
-                height: 15px;
-                font-size: 0.55rem;
-            }
-            .featured-tag {
-                top: 10px;
-                right: 10px;
-                font-size: 0.6rem;
-                padding: 3px 9px;
-            }
-            .alt-box {
-                padding: 10px 12px;
-            }
-            .alt-box-title {
-                font-size: 0.7rem;
-            }
-            .alt-box p {
-                font-size: 0.7rem;
-            }
+            .plan { padding: 20px 15px 18px; background: rgba(15, 15, 25, 0.8); }
+            .discount-badge { padding: 6px 10px; gap: 4px; font-size: 0.75rem; }
+            .discount-badge .old-price { font-size: 0.7rem; }
+            .discount-badge .new-price { font-size: 0.78rem; }
+            .discount-badge .save-tag { font-size: 0.6rem; padding: 2px 7px; }
+            .flip-num { font-size: 0.9rem; }
+            .flip-label { font-size: 0.5rem; }
+            .flip-unit { padding: 6px 3px; }
+            .flip-countdown { gap: 4px; }
+            .plan-logo { width: 42px; height: 42px; border-radius: 10px; padding: 7px; }
+            .plan-name { font-size: 1.15rem; }
+            .plan-subtitle { font-size: 0.7rem; }
+            .price .amount { font-size: 1.6rem; }
+            .features li { font-size: 0.75rem; gap: 7px; }
+            .features li .check { width: 15px; height: 15px; font-size: 0.55rem; }
+            .featured-tag { top: 10px; right: 10px; font-size: 0.6rem; padding: 3px 9px; }
+            .alt-box { padding: 10px 12px; }
+            .alt-box-title { font-size: 0.7rem; }
+            .alt-box p { font-size: 0.7rem; }
         }
 
-        /* ===== PREFIERE MOVIMIENTO REDUCIDO ===== */
         @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
+            *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
-            #fireCanvas {
-                opacity: 0.3;
-            }
-            .orb {
-                opacity: 0.1;
-            }
+            #fireCanvas { opacity: 0.2; }
+            .orb { opacity: 0.05; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Canvas de partículas de fuego -->
     <canvas id="fireCanvas"></canvas>
-
-    <!-- Glow cálido inferior -->
     <div class="fire-glow"></div>
-
-    <!-- Fondo aurora -->
     <div class="aurora-bg"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
@@ -1180,24 +661,20 @@
 
     <div class="container">
 
-        <!-- HEADER -->
         <header class="header">
             <div class="brand-badge">✦ BaraPag Oficial ✦</div>
             <h1>Planes de Páginas</h1>
             <p>Soluciones web premium, diseñadas con precisión artesanal para impulsar tu negocio o hacer inolvidables tus celebraciones.</p>
         </header>
 
-        <!-- PROMO BANNER -->
         <div class="promo-banner">
             <span class="promo-icon">🎉</span>
             <strong>Descuento especial de lanzamiento</strong>
             <p>Aprovecha nuestros precios rebajados por haber abierto hace poco el proyecto. ¡Oferta por tiempo limitado!</p>
         </div>
 
-        <!-- PLANES -->
         <section class="plans">
 
-            <!-- PLAN ESTÁNDAR -->
             <div class="plan-wrapper">
                 <div class="discount-badge">
                     <span class="fire">🔥</span>
@@ -1246,28 +723,15 @@
                         </ul>
 
                         <div class="flip-countdown" id="flipCountdown">
-                            <div class="flip-unit">
-                                <div class="flip-num" id="fc-d">00</div>
-                                <div class="flip-label">Días</div>
-                            </div>
-                            <div class="flip-unit">
-                                <div class="flip-num" id="fc-h">00</div>
-                                <div class="flip-label">Horas</div>
-                            </div>
-                            <div class="flip-unit">
-                                <div class="flip-num" id="fc-m">00</div>
-                                <div class="flip-label">Min</div>
-                            </div>
-                            <div class="flip-unit">
-                                <div class="flip-num" id="fc-s">00</div>
-                                <div class="flip-label">Seg</div>
-                            </div>
+                            <div class="flip-unit"><div class="flip-num" id="fc-d">00</div><div class="flip-label">Días</div></div>
+                            <div class="flip-unit"><div class="flip-num" id="fc-h">00</div><div class="flip-label">Horas</div></div>
+                            <div class="flip-unit"><div class="flip-num" id="fc-m">00</div><div class="flip-label">Min</div></div>
+                            <div class="flip-unit"><div class="flip-num" id="fc-s">00</div><div class="flip-label">Seg</div></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- PLAN ESTÁNDAR PLUS -->
             <div class="plan-wrapper">
                 <div class="discount-badge">
                     <span class="fire">🔥</span>
@@ -1308,7 +772,7 @@
                         <li><span class="check">✓</span> Exclusivo para páginas de negocio</li>
                     </ul>
 
-                    <div class="alt-box" style="border-color: rgba(139, 92, 246, 0.3); background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(74, 144, 226, 0.02));">
+                    <div class="alt-box" style="border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.06);">
                         <div class="alt-box-title" style="color: var(--blue);">💼 Nota importante</div>
                         <p style="color: var(--text); margin-bottom: 0;">Este plan está <strong>exclusivamente disponible para páginas de negocio</strong>. No aplica para tarjetas de cumpleaños ni celebraciones.</p>
                     </div>
@@ -1317,35 +781,33 @@
 
         </section>
 
-        <!-- FOOTER -->
         <footer class="footer">
             <div class="logo-text">BaraPag Oficial</div>
             <p>Páginas web profesionales hechas con pasión</p>
             <p class="note">Este sitio es una muestra oficial · No incluye botón de compra</p>
         </footer>
-
     </div>
 
     <script>
         (function() {
-            // ===== SISTEMA DE PARTÍCULAS DE FUEGO - ALTAMENTE OPTIMIZADO =====
+            // ===== SISTEMA DE PARTÍCULAS DE FUEGO MEGA LIGERO =====
             const canvas = document.getElementById('fireCanvas');
             const ctx = canvas.getContext('2d', { alpha: true, willReadFrequently: false });
 
             let width, height;
             const isMobile = window.innerWidth <= 768;
             const isSmallMobile = window.innerWidth <= 480;
-            const PARTICLE_COUNT = isSmallMobile ? 28 : (isMobile ? 40 : 60);
+            // Partículas mínimas para móvil
+            const PARTICLE_COUNT = isSmallMobile ? 15 : (isMobile ? 20 : 50);
             const particles = [];
 
-            // Paleta de colores de fuego predefinida (arrays para acceso rápido)
             const fireColorsRGBA = [
-                [255, 230, 100], // Amarillo brillante
-                [255, 180, 50], // Naranja dorado
-                [255, 120, 30], // Naranja
-                [255, 80, 20], // Rojo-anaranjado
-                [220, 50, 20], // Rojo oscuro
-                [180, 30, 10] // Rojo profundo
+                [255, 230, 100],
+                [255, 180, 50],
+                [255, 120, 30],
+                [255, 80, 20],
+                [220, 50, 20],
+                [180, 30, 10]
             ];
 
             function resizeCanvas() {
@@ -1371,7 +833,7 @@
                     this.y = initial ? Math.random() * height : height + Math.random() * 50;
                     this.vx = (Math.random() - 0.5) * 0.8;
                     this.vy = -(Math.random() * 1.5 + 0.5);
-                    this.size = Math.random() * 4 + 2;
+                    this.size = Math.random() * 3 + 2;
                     this.life = 1;
                     this.decay = Math.random() * 0.008 + 0.003;
                     this.colorIndex = Math.floor(Math.random() * fireColorsRGBA.length);
@@ -1384,78 +846,41 @@
                     this.x += this.vx + Math.sin(this.wobble) * 0.3;
                     this.y += this.vy;
                     this.life -= this.decay;
-
                     const progress = 1 - this.life;
-                    this.colorIndex = Math.min(fireColorsRGBA.length - 1, Math.floor(progress * fireColorsRGBA
-                        .length));
-
-                    if (this.life <= 0 || this.y < -20) {
-                        this.reset(false);
-                    }
+                    this.colorIndex = Math.min(fireColorsRGBA.length - 1, Math.floor(progress * fireColorsRGBA.length));
+                    if (this.life <= 0 || this.y < -20) this.reset(false);
                 }
 
                 draw(ctx) {
-                    const alpha = this.life * 0.8;
+                    const alpha = this.life * 0.7;
                     if (alpha <= 0.01) return;
-
                     const [r, g, b] = fireColorsRGBA[this.colorIndex];
-                    const glowSize = this.size * 2.8;
-
-                    // Solo dibujar si es visible (culling básico)
-                    if (this.x < -glowSize || this.x > width + glowSize || this.y < -glowSize || this.y > height +
-                        glowSize) return;
-
-                    // Círculo exterior con alpha bajo (efecto glow sin gradiente radial)
-                    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.35})`;
+                    const s = this.size;
+                    // Solo un círculo suave, sin glow costoso
+                    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, glowSize, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    // Círculo medio
-                    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.6})`;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size * 1.3, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    // Núcleo brillante (más pequeño)
-                    ctx.fillStyle = `rgba(255, 240, 180, ${alpha * 0.85})`;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size * 0.45, 0, Math.PI * 2);
+                    ctx.arc(this.x, this.y, s, 0, Math.PI * 2);
                     ctx.fill();
                 }
             }
 
-            // Crear partículas
-            for (let i = 0; i < PARTICLE_COUNT; i++) {
-                particles.push(new FireParticle());
-            }
+            for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new FireParticle());
 
-            // Usar un temporizador para controlar FPS (~40 FPS para el fuego, suficiente con blur)
-            let lastFireFrame = 0;
-            const FIRE_FPS = 40;
-            const FIRE_INTERVAL = 1000 / FIRE_FPS;
+            // FPS bajo (24) para ahorrar batería
+            let lastTime = 0;
+            const fpsInterval = 1000 / 24;
 
             function animate(timestamp) {
-                if (timestamp - lastFireFrame >= FIRE_INTERVAL) {
-                    lastFireFrame = timestamp;
-
-                    // Limpiar con transparencia para dejar estela
-                    ctx.fillStyle = 'rgba(10, 10, 15, 0.18)';
-                    ctx.fillRect(0, 0, width, height);
-
-                    // Modo de mezcla aditiva para brillo
-                    ctx.globalCompositeOperation = 'lighter';
-
-                    const len = particles.length;
-                    for (let i = 0; i < len; i++) {
-                        particles[i].update();
-                        particles[i].draw(ctx);
-                    }
-
-                    ctx.globalCompositeOperation = 'source-over';
-                }
-
                 requestAnimationFrame(animate);
+                const elapsed = timestamp - lastTime;
+                if (elapsed < fpsInterval) return;
+                lastTime = timestamp - (elapsed % fpsInterval);
+
+                ctx.clearRect(0, 0, width, height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw(ctx);
+                }
             }
 
             requestAnimationFrame(animate);
@@ -1471,114 +896,49 @@
             const fcS = document.getElementById('fc-s');
 
             function updateCountdown() {
-                const now = Date.now();
-                const distance = targetDate.getTime() - now;
-
+                const distance = targetDate.getTime() - Date.now();
                 if (distance < 0) {
-                    fcD.textContent = '00';
-                    fcH.textContent = '00';
-                    fcM.textContent = '00';
-                    fcS.textContent = '00';
+                    fcD.textContent = fcH.textContent = fcM.textContent = fcS.textContent = '00';
                     return;
                 }
-
-                const days = Math.floor(distance / 86400000);
-                const hours = Math.floor((distance % 86400000) / 3600000);
-                const minutes = Math.floor((distance % 3600000) / 60000);
-                const seconds = Math.floor((distance % 60000) / 1000);
-
-                fcD.textContent = String(days).padStart(2, '0');
-                fcH.textContent = String(hours).padStart(2, '0');
-                fcM.textContent = String(minutes).padStart(2, '0');
-                fcS.textContent = String(seconds).padStart(2, '0');
+                fcD.textContent = String(Math.floor(distance / 86400000)).padStart(2, '0');
+                fcH.textContent = String(Math.floor((distance % 86400000) / 3600000)).padStart(2, '0');
+                fcM.textContent = String(Math.floor((distance % 3600000) / 60000)).padStart(2, '0');
+                fcS.textContent = String(Math.floor((distance % 60000) / 1000)).padStart(2, '0');
             }
-
             updateCountdown();
             setInterval(updateCountdown, 1000);
 
-            // ===== EFECTO 3D TILT - OPTIMIZADO CON RAF Y THROTTLING =====
-            const tiltCards = document.querySelectorAll('[data-tilt]');
-            let tiltActive = false;
-            let tiltRAF = null;
-            let pendingTiltData = [];
-
-            tiltCards.forEach(function(card) {
-                card.addEventListener('pointermove', function(e) {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    const rotateX = (y - centerY) / 25;
-                    const rotateY = (centerX - x) / 25;
-                    const mouseXPercent = (x / rect.width) * 100;
-                    const mouseYPercent = (y / rect.height) * 100;
-
-                    pendingTiltData.push({
-                        card: card,
-                        transform: `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
-                        mouseX: mouseXPercent,
-                        mouseY: mouseYPercent
+            // ===== EFECTO 3D TILT (SOLO ESCRITORIO, NO TÁCTIL) =====
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            if (!isTouchDevice) {
+                document.querySelectorAll('[data-tilt]').forEach(card => {
+                    card.addEventListener('mousemove', e => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        const rotateX = (y - centerY) / 25;
+                        const rotateY = (centerX - x) / 25;
+                        card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                        card.style.setProperty('--mouse-x', (x / rect.width) * 100 + '%');
+                        card.style.setProperty('--mouse-y', (y / rect.height) * 100 + '%');
                     });
-
-                    if (!tiltActive) {
-                        tiltActive = true;
-                        tiltRAF = requestAnimationFrame(processTiltUpdates);
-                    }
-                }, { passive: true });
-
-                card.addEventListener('pointerleave', function() {
-                    pendingTiltData.push({
-                        card: card,
-                        transform: 'translateY(0) rotateX(0) rotateY(0)',
-                        mouseX: 50,
-                        mouseY: 50,
-                        isReset: true
+                    card.addEventListener('mouseleave', () => {
+                        card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
                     });
-
-                    if (!tiltActive) {
-                        tiltActive = true;
-                        tiltRAF = requestAnimationFrame(processTiltUpdates);
-                    }
-                }, { passive: true });
-            });
-
-            function processTiltUpdates() {
-                // Procesar solo el último evento pendiente para cada tarjeta
-                const processedCards = new Set();
-
-                for (let i = pendingTiltData.length - 1; i >= 0; i--) {
-                    const data = pendingTiltData[i];
-                    if (!processedCards.has(data.card)) {
-                        processedCards.add(data.card);
-                        data.card.style.transform = data.transform;
-                        if (!data.isReset) {
-                            data.card.style.setProperty('--mouse-x', data.mouseX + '%');
-                            data.card.style.setProperty('--mouse-y', data.mouseY + '%');
-                        }
-                    }
-                }
-
-                pendingTiltData = [];
-                tiltActive = false;
-                tiltRAF = null;
+                });
             }
 
-            // ===== REACTIVAR PARTICLES EN RESIZE PARA MÓVIL =====
-            window.addEventListener('resize', function() {
-                const newIsMobile = window.innerWidth <= 768;
-                const newIsSmallMobile = window.innerWidth <= 480;
-                const newCount = newIsSmallMobile ? 28 : (newIsMobile ? 40 : 60);
-
-                // Ajustar partículas si cambió el breakpoint
-                while (particles.length < newCount) {
-                    particles.push(new FireParticle());
-                }
-                while (particles.length > newCount) {
-                    particles.pop();
-                }
+            // Ajustar partículas al cambiar tamaño
+            window.addEventListener('resize', () => {
+                const nowMobile = window.innerWidth <= 768;
+                const nowSmall = window.innerWidth <= 480;
+                const targetCount = nowSmall ? 15 : (nowMobile ? 20 : 50);
+                while (particles.length < targetCount) particles.push(new FireParticle());
+                while (particles.length > targetCount) particles.pop();
             }, { passive: true });
-
         })();
     </script>
 </body>
